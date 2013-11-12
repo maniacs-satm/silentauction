@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Silent Auction - Item Details
+  input(type="hidden", id="lotId", value=id)
+  div(class="lot-box-big")
+    div(data-bind="text: title" class="title")
+    div(data-bind="text: description")
+    div(data-bind="text: minimumBid")
+    div(data-bind="text: highBid")
+    div(data-bind="text: highBidder")
+  input(id="bidAmount")
+  input(type="button", value="Place Bid", id="makeBid")
+block scripts
+  script(type='text/javascript', src='/js/details.js')
+

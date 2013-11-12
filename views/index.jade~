@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 Slient Auction - Open Items
+  div(data-bind="foreach: lots")
+    div(class="lot-box")
+      div(data-bind="text: title" class="title")
+      div(data-bind="text: description")
+      div(data-bind="text: minimumBid")
+      div(data-bind="click: gotoDetails", class="details-link") details
+
+block scripts
+  script(type='text/javascript', src='/js/index.js')
+

@@ -1,0 +1,22 @@
+(function($) { 
+  $(document).ready(function() {
+    $('#create').click(function() {
+      var data = {id: 45,
+		title: $('#title').val(),
+		description: $('#description').val(),
+		minimumBid: $('#minimumBid').val()
+      };
+
+      $.ajax({
+        type: "POST",
+        data: {'lot': data},
+        url: "/api/lot/create",
+        dataType: "json"
+      });
+    });
+ 
+  });
+})(jQuery)
+
+
+

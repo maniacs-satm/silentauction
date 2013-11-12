@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  h1 Silent Auction - Add Item
+  div Title: 
+    input(id='title')
+  div Description: 
+    input(id='description')
+  div Minimum Bid: 
+    input(id='minimumBid')
+  input(type="button" id="create" value="Create Item")
+  div
+    input(type="button" id='delete' value='delete everything')
+
+
+block scripts
+  script(type='text/javascript', src='/js/create.js')
+

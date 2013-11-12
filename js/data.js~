@@ -1,0 +1,21 @@
+var dburl = "localhost:27017";
+var collections = ["users", "lots", "bids"];
+var db = require("mongojs").connect(dburl, collections);
+
+
+var data = {
+  saveLot: function(lot) {
+    // validate the lot
+    db.lots.save(lot);
+  },
+  getOpenLots: function(f) {
+    db.lots.find(function(err, lots) {
+      if (!err && lots) {
+        f(lots);
+      }
+    });
+  }
+};
+
+
+

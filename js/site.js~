@@ -1,0 +1,18 @@
+(function($) { 
+  $(document).ready(function() {
+    $('#search').click(function() {
+      $.ajax({
+        type: "GET",
+        url: "/api/lots/getOpen",
+        dataType: "json"
+      }).done(function(lots) {
+        console.log(lots);
+        $(lots).each(function(l){
+        });
+      });
+    });
+  });
+})(jQuery)
+
+
+
