@@ -1,18 +1,34 @@
 extends layout
 
 block content
-
   h1 Silent Auction - Add Item
-  div Title: 
-    input(id='title')
-  div Description: 
-    input(id='description')
-  div Minimum Bid: 
-    input(id='minimumBid')
-  input(type="button" id="create" value="Create Item")
-  div
-    input(type="button" id='delete' value='delete everything')
-
+  div.createDetails
+    div.row
+      div.label Title: 
+      input#title
+    div.row
+      div.label Description: 
+      input#description
+    div.row
+      div.label Minimum Bid: 
+      input#minimumBid
+    div.row
+      div.label Donated By: 
+      input#donatedBy
+    div.row
+      div.label Donated Link:
+      input#donatedLink
+    div.row
+      div.label Start Date/Time:
+      input#startDate
+    div.row
+      div.label End Date/Time:
+      input#endDate
+    div.row(style="text-align: middlde;")
+      div.label
+      input(type="button" id="create" value="Create Item")
+    div(style="padding-top: 120px;")
+      input(type="button" id='delete' value='delete everything')
 
 block scripts
   script(type='text/javascript', src='/js/create.js')

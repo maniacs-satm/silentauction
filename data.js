@@ -31,6 +31,7 @@ exports.getOpenLots = function(f) {
   });
 };
 
+
 exports.getDetails = function(f, id) {
   db.lots.find({_id: require("mongojs").ObjectId(id)}, function(err, lot) {
     if (!err && lot) {
