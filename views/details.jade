@@ -2,15 +2,26 @@ extends layout
 
 block content
   h1 Item Details
-  input(type="hidden", id="lotId", value=id)
-  div(class="lot-box-big")
-    div(data-bind="text: title" class="title")
-    div(data-bind="text: description")
-    div(data-bind="text: minimumBid")
-    div(data-bind="text: highBid")
-    div(data-bind="text: highBidder")
-  input(id="bidAmount")
-  input(type="button", value="Place Bid", id="makeBid")
+  div.lot-container
+    input#lotId(type="hidden" value=id)
+  div
+    span Bid Amount: 
+    input(id="bidAmount")
+  div
+    span Bidder: 
+    input(id="bidder")
+  div
+    input(type="button", value="Place Bid", id="makeBid")
+    
+
+  script#lot-template(type='text/x-handlebars-template')
+    div.lot-box-big
+      div.title {{lot.Title}}
+      div {{lot.Description}}
+      div Minimum Bid: {{lot.MinimumBid}}
+      div High Bid: {{highBid}} - {{highBidder}}
+
+
 block scripts
   script(type='text/javascript', src='/js/details.js')
 

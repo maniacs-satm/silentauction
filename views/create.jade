@@ -3,30 +3,42 @@ extends layout
 block content
   h1 Silent Auction - Add Item
   div.createDetails
+    form#lotDetails
+      div.row
+        div.label Title: 
+        input#title
+      div.row
+        div.label Description: 
+        input#description
+      div.row
+        div.label Minimum Bid: 
+        input#minimumBid
+      div.row
+        div.label Donated By: 
+        input#donatedBy
+      div.row
+        div.label Donated Link:
+        input#donatedLink
+      div.row
+        div.label Start Date:
+        input#startDate
+      div.row
+        div.label Start Time:
+        select#startTime.time
+        select#startAMPM.ampm
+      div.row
+        div.label End Date:
+        input#endDate
+      div.row
+        div.label End Time:
+        select#endTime.time
+        select#endAMPM.ampm
     div.row
-      div.label Title: 
-      input#title
-    div.row
-      div.label Description: 
-      input#description
-    div.row
-      div.label Minimum Bid: 
-      input#minimumBid
-    div.row
-      div.label Donated By: 
-      input#donatedBy
-    div.row
-      div.label Donated Link:
-      input#donatedLink
-    div.row
-      div.label Start Date/Time:
-      input#startDate
-    div.row
-      div.label End Date/Time:
-      input#endDate
-    div.row(style="text-align: middlde;")
       div.label
       input(type="button" id="create" value="Create Item")
+    div.row
+      div.label
+      div#status
     div(style="padding-top: 120px;")
       input(type="button" id='delete' value='delete everything')
 

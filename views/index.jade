@@ -2,13 +2,23 @@ extends layout
 
 block content
   h1 Open Items
-  div(data-bind="foreach: lots")
-    div(class="lot-box")
-      div(data-bind="text: title" class="title")
-      div(data-bind="text: description")
-      div(data-bind="text: minimumBid")
-      div(data-bind="click: gotoDetails", class="details-link") details
+  div.lot-container
+
+  script#lot-template(type='text/x-handlebars-template')
+    div.lot-box
+      div.title {{lot.Title}}
+      img(src='')
+      div.label High Bid:
+        high bid
+        -
+        high bidder
+      div.label Donated By:
+        {{lot.donatedBy}}
+      div.details-link details
+        input.lot-id(type='hidden', value='{{lot._id}}')
 
 block scripts
   script(type='text/javascript', src='/js/index.js')
+
+
 

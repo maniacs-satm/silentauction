@@ -33,7 +33,8 @@ app.get('/lot/details/:id', function(req, res) {
 });
 
 app.post('/api/lot/create', function(req, res) {
-  database.saveLot(req.body.lot);
+  var errors = database.saveLot(req.body.lot);
+  res.send(JSON.stringify(errors));
 });
 
 app.get('/api/lot/details', function(req, res) {
@@ -46,14 +47,7 @@ app.get('/api/lot/details', function(req, res) {
 });
 
 app.post('/api/bid/put', function(req, res) {
-    database.saveBid(req.body.bid);
-});
-
-app.get('/api/bids/get', function(req, res) {
-  var f = function(bids){
-    res.send(JSON.stringify(bids));
-  };
-  database.getBids(f, req.query.lotId);
+  database.saveBid(req.body.bid);
 });
 
 app.post('/api/lot/delete', function(req, res) {
@@ -69,9 +63,7 @@ app.get('/api/lots/open', function(req, res) {
 });
 
 http.createServer(app).listen(8888, function() {
-  
-
-('express app started.');
+  ('express app started.');
 });
 
 

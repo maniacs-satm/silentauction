@@ -1,23 +1,12 @@
 (function($) { 
   $(document).ready(function() {
-		function Lot(id, title, description, minimum) {
-	    var self = this;
-      self.id = id;
-	    self.title = title;
-	    self.description = description;
-			self.minimumBid = minimum;
-      self.gotoDetails = function() {
-        document.location = '/lot/details/' + self.id;
-      };
-		}
+    var source = $('#lot-template').html();
+    var template = Handlebars.compile(source);
 
-    function LotsVM() {
-      var self = this;
-      self.lots = ko.observableArray([]);
-    }
-
-    var vm = new LotsVM();
-    ko.applyBindings(vm);
+    $('.lot-container').on('click', '.details-link', function(e) {
+      var id = $(this).find('.lot-id').val();
+      document.location = '/lot/details/' + id;
+    });
 
 		$.ajax({
 			type: "GET",
@@ -25,8 +14,7 @@
 			dataType: "json"
 		}).done(function(lots) {
       $.each(lots, function(i, l){
-        console.log(l);
-        vm.lots.push(new Lot(l._id, l.Title, l.Description, l.MinimumBid));
+        $('.lot-container').append(template({lot: l}));
       });
 		});
 
