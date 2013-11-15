@@ -13,11 +13,13 @@
             StartDate: $('#startDate').val(),
             StartTime: $('#startTime').val() + $('#startAMPM').val(),
             EndDate: $('#endDate').val(),
-            EndTime: $('#endTime').val() + $('#endAMPM').val()
+            EndTime: $('#endTime').val() + $('#endAMPM').val(),
+            smallImage: $('#smallImage').val(),
+            largeImage: $('#largeImage').val()
       };
 
       $.ajax({
-        type: "POST",
+        type: "file",
         data: {'lot': data},
         url: "/api/lot/create",
         dataType: "json"

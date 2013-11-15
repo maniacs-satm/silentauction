@@ -3,16 +3,15 @@ var collections = ["users", "lots"];
 var db = require("mongojs").connect(dburl, collections);
 var validation = require('./js/validation.js');
 
-exports.saveLot = function(lot) {
+exports.saveLot = function(lot, f) {
   //validate the lot.
   var errors = validation.validateLot(lot);
 
   if (errors.length > 0)
-    return errors;
+    return {errors: errors};
 
-  db.lots.save(lot);
+  db.lots.save(lot, function(e, l) { f({errors: errors, id: l._id}); });
 
-  return errors;
 };
 
 exports.saveBid = function(bid) {

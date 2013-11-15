@@ -1,6 +1,7 @@
 var http = require('http');
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 app.set('view engine', 'jade');
 app.set('views', './views');
@@ -8,6 +9,7 @@ app.set('views', './views');
 app.use(express.bodyParser());
 app.use('/js', express.static('./js'));
 app.use('/css', express.static('./css'));
+app.use('/images', express.static('./images'))
 
 var database = require('./data.js');
 
@@ -32,9 +34,46 @@ app.get('/lot/details/:id', function(req, res) {
   res.render('details', {id: req.params.id});
 });
 
-app.post('/api/lot/create', function(req, res) {
-  var errors = database.saveLot(req.body.lot);
-  res.send(JSON.stringify(errors));
+var getFileExt = function(name) {
+  var parts = name.split('.');
+  if (parts.length < 2)
+    return '';
+
+  return parts[parts.length - 1];
+};
+
+var saveFile = function(path, name, id, type) {
+  fs.readFile(path, function (err, data) {
+    var ext = getFileExt(name);
+    var newPath = __dirname + "/images/" + type + "_" + id + "." + ext;
+    fs.writeFile(newPath, data, function (err) {
+      console.log(err);
+    });
+  });
+};
+
+app.post('/lot/create', function(req, res) {
+  var lot = {
+    Title: req.body.title,
+    Description: req.body.description,
+    MinimumBid: req.body.minimumBid,
+    DonatedBy: req.body.donatedBy,
+    DonatedLink: req.body.donatedLink,
+    StartDate: req.body.startDate,
+    StartTime: req.startTime + req.body.startAMPM,
+    EndDate: req.body.endDate,
+    EndTime: req.body.endTime + req.body.endAMPM,
+  };
+  
+  console.log(lot);
+
+  database.saveLot(lot, function(rtn){
+    saveFile(req.files.smallImage.path, req.files.smallImage.name, rtn.id, 'small');
+    saveFile(req.files.largeImage.path, req.files.largeImage.name, rtn.id, 'large'); 
+
+    res.render('create');
+ });
+
 });
 
 app.get('/api/lot/details', function(req, res) {

@@ -2,45 +2,52 @@ extends layout
 
 block content
   h1 Silent Auction - Add Item
-  div.createDetails
-    form#lotDetails
+  form#lotForm(action='/lot/create', method="post", enctype="multipart/form-data")
+    div.createDetails
+      form#lotDetails
+        div.row
+          div.label Title: 
+          input#title(name="title")
+        div.row
+          div.label Description: 
+          input#description(name="description")
+        div.row
+          div.label Minimum Bid: 
+          input#minimumBid(name="minimumBid")
+        div.row
+          div.label Donated By: 
+          input#donatedBy(name="donatedBy")
+        div.row
+          div.label Donated Link:
+          input#donatedLink(name="donatedLink")
+        div.row
+          div.label Start Date:
+          input#startDate(name="startDate")
+        div.row
+          div.label Start Time:
+          select#startTime.time(name="startTime")
+          select#startAMPM.ampm(name="startAMPM")
+        div.row
+          div.label End Date:
+          input#endDate(name="endDate")
+        div.row
+          div.label End Time:
+          select#endTime.time(name="endTime")
+          select#endAMPM.ampm(name="endAMPM")
+        div.row
+          div.label Small Image:
+          input#smallImage(type='file', name='smallImage')
+        div.row
+          div.label Large Image:
+          input#largeImage(type='file', name='largeImage')
       div.row
-        div.label Title: 
-        input#title
+        div.label
+        input(type="submit" value="Create Item")
       div.row
-        div.label Description: 
-        input#description
-      div.row
-        div.label Minimum Bid: 
-        input#minimumBid
-      div.row
-        div.label Donated By: 
-        input#donatedBy
-      div.row
-        div.label Donated Link:
-        input#donatedLink
-      div.row
-        div.label Start Date:
-        input#startDate
-      div.row
-        div.label Start Time:
-        select#startTime.time
-        select#startAMPM.ampm
-      div.row
-        div.label End Date:
-        input#endDate
-      div.row
-        div.label End Time:
-        select#endTime.time
-        select#endAMPM.ampm
-    div.row
-      div.label
-      input(type="button" id="create" value="Create Item")
-    div.row
-      div.label
-      div#status
-    div(style="padding-top: 120px;")
-      input(type="button" id='delete' value='delete everything')
+        div.label
+        div#status
+  div(style="padding-top: 120px;")
+    input(type="button" id='delete' value='delete everything')
 
 block scripts
   script(type='text/javascript', src='/js/create.js')
