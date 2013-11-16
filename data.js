@@ -10,15 +10,24 @@ exports.saveLot = function(lot, f) {
   if (errors.length > 0)
     return {errors: errors};
 
-  db.lots.save(lot, function(e, l) { f({errors: errors, id: l._id}); });
+  var saveCallback = function(errors, count, info) {
+    if (errors && errors.length > 0)
+      f({errors: errors});
 
+    if (!info.updateExisting)
+      f({errors: [], id: info._id});
+
+    f({errors: [], id: ''});
+  };
+
+  db.lots.save(lot, saveCallback);
 };
 
-exports.saveBid = function(bid) {
+exports.saveBid = function(bid, f) {
   var getCallback = function(l) {
     if (!l.Bids) l.Bids = [];
     l.Bids.push(bid);
-    exports.saveLot(l);
+    exports.saveLot(l, f);
   };
   exports.getDetails(getCallback, bid.LotId);
 };

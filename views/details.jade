@@ -12,6 +12,8 @@ block content
     input(id="bidder")
   div
     input(type="button", value="Place Bid", id="makeBid")
+  div
+    span#resultMsg
     
 
   script#lot-template(type='text/x-handlebars-template')
@@ -19,8 +21,12 @@ block content
       div.title {{lot.Title}}
       div {{lot.Description}}
       div Minimum Bid: {{lot.MinimumBid}}
-      div High Bid: {{highBid}} - {{highBidder}}
-
+      div High Bid: 
+        span#highBid {{highBid}} 
+        span - 
+        span#highBidder {{highBidder}}
+      div Total Bids: 
+        span#totalBids {{totalBids}}
 
 block scripts
   script(type='text/javascript', src='/js/details.js')

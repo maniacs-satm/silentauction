@@ -86,7 +86,11 @@ app.get('/api/lot/details', function(req, res) {
 });
 
 app.post('/api/bid/put', function(req, res) {
-  database.saveBid(req.body.bid);
+  var c = function(errors, id) {
+    res.send(JSON.stringify({errors: errors, id: id}));
+  };
+  
+  database.saveBid(req.body.bid, c);
 });
 
 app.post('/api/lot/delete', function(req, res) {
