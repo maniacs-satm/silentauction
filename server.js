@@ -65,9 +65,8 @@ app.post('/lot/create', function(req, res) {
     EndTime: req.body.endTime + req.body.endAMPM,
   };
   
-  console.log(lot);
-
   database.saveLot(lot, function(rtn){
+    console.log(rtn);
     saveFile(req.files.smallImage.path, req.files.smallImage.name, rtn.id, 'small');
     saveFile(req.files.largeImage.path, req.files.largeImage.name, rtn.id, 'large'); 
 
@@ -99,6 +98,7 @@ app.post('/api/lot/delete', function(req, res) {
 
 app.get('/api/lots/open', function(req, res) {
   var f = function(data){
+    console.log(data);
     res.send(JSON.stringify(data));
   };
 

@@ -1,23 +1,26 @@
-var dburl = "localhost:27017";
-var collections = ["users", "lots"];
-var db = require("mongojs").connect(dburl, collections);
+var db = require("mongojs").connect("localhost:27017/silentauction", ["users", "lots"]);
 var validation = require('./js/validation.js');
 
 exports.saveLot = function(lot, f) {
   //validate the lot.
   var errors = validation.validateLot(lot);
-
+  
   if (errors.length > 0)
     return {errors: errors};
 
-  var saveCallback = function(errors, count, info) {
+  var saveCallback = function(errors, lot) {
     if (errors && errors.length > 0)
       f({errors: errors});
 
-    if (!info.updateExisting)
-      f({errors: [], id: info._id});
-
-    f({errors: [], id: ''});
+    console.log(errors);
+    console.log(lot);
+      
+    if (!lot)
+    {
+      f({errors: ['no lot object returned'], id: ''});
+    }
+      
+    f({errors: [], id: lot._id});
   };
 
   db.lots.save(lot, saveCallback);
@@ -45,6 +48,7 @@ exports.deleteLots = function() {
 
 exports.getOpenLots = function(f) {
   db.lots.find(function(err, lots) {
+    console.log(err);
     if (!err && lots) {
       f(lots);
     }
