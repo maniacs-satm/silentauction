@@ -75,6 +75,16 @@ app.post('/lot/create', function(req, res) {
 
 });
 
+app.get('/register', function(req, res) {
+  res.render('register');
+});
+
+
+app.post('/api/user/register', function(req, res) {
+  var data = {result: true};
+  res.send(JSON.stringify(data));
+});
+
 app.get('/api/lot/details', function(req, res) {
   var id = req.query.id;
   var f = function(data){

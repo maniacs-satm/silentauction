@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Register
+  form#reigsterForm(action='/user/register', method="post", enctype="multipart/form-data")
+    div.createDetails
+      form#lotDetails
+        div.row
+          div.label Email Address: 
+          input#email(name="username")
+          span @porticobenfits.org
+        div.row
+          div.label Password: 
+          input#password(type='password')
+      div.label
+        input#register(type="button" value="Register")
+      div.row
+        div.label
+        div#status
+
+        
+        
+block scripts
+  script(type='text/javascript', src='/js/register.js')
+        
