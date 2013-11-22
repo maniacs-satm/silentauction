@@ -66,7 +66,6 @@ app.post('/lot/create', function(req, res) {
   };
   
   database.saveLot(lot, function(rtn){
-    console.log(rtn);
     saveFile(req.files.smallImage.path, req.files.smallImage.name, rtn.id, 'small');
     saveFile(req.files.largeImage.path, req.files.largeImage.name, rtn.id, 'large'); 
 
@@ -79,10 +78,20 @@ app.get('/register', function(req, res) {
   res.render('register');
 });
 
-
 app.post('/api/user/register', function(req, res) {
-  var data = {result: true};
-  res.send(JSON.stringify(data));
+  var f = function(result) {
+    res.send(JSON.stringify(result));
+  };
+  
+  database.saveUser(req.body.user, f);
+});
+
+app.post('/api/user/getall', function(req, res) {
+  var f = function(data){
+    res.send(JSON.stringify(data));
+  };
+
+  database.getUsers(f);
 });
 
 app.get('/api/lot/details', function(req, res) {

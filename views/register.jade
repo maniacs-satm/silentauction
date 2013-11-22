@@ -7,7 +7,7 @@ block content
       form#lotDetails
         div.row
           div.label Email Address: 
-          input#email(name="username")
+          input#username(name="username")
           span @porticobenfits.org
         div.row
           div.label Password: 
@@ -17,9 +17,9 @@ block content
       div.row
         div.label
         div#status
+      div.row
+        div#allUsers
 
         
-        
 block scripts
-  script(type='text/javascript', src='/js/register.js')
-        
+  script(src='/js/register.js')

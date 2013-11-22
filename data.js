@@ -1,6 +1,42 @@
 var db = require("mongojs").connect("localhost:27017/silentauction", ["users", "lots"]);
 var validation = require('./js/validation.js');
 
+
+exports.getUsers = function(f) {
+  db.users.find(function(err, users) {
+    if (!err && users) {
+      f(users);
+    }
+  });
+};
+
+exports.saveUser = function(user, f) {
+  var saveCallback = function(errors, user) {
+    if (errors && errors.length > 0) {
+      f({result:false, errors: errors});
+      return;
+    }
+    
+    f({result: true});
+    return;
+  };
+
+  db.users.find({UserName: user.UserName}, function(err, users) {
+    if (err) {
+      f({errors: err, result: false});
+      return;
+    }
+    
+    if (users && users.length > 0) {
+      f({errors: ['user name already exists'], result: false});
+      return;
+    }
+      
+    db.users.save(user, saveCallback);
+  });
+};
+
+
 exports.saveLot = function(lot, f) {
   //validate the lot.
   var errors = validation.validateLot(lot);
@@ -12,12 +48,10 @@ exports.saveLot = function(lot, f) {
     if (errors && errors.length > 0)
       f({errors: errors});
 
-    console.log(errors);
-    console.log(lot);
-      
     if (!lot)
     {
       f({errors: ['no lot object returned'], id: ''});
+      return;
     }
       
     f({errors: [], id: lot._id});
