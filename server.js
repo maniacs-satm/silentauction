@@ -42,10 +42,16 @@ var getFileExt = function(name) {
   return parts[parts.length - 1];
 };
 
+var getImageName = function(name, id, type) {
+  var ext = getFileExt(name);
+  return type + "_" + id + "." + ext;
+};
+
+
 var saveFile = function(path, name, id, type) {
   fs.readFile(path, function (err, data) {
     var ext = getFileExt(name);
-    var newPath = __dirname + "/images/" + type + "_" + id + "." + ext;
+    var newPath = __dirname + "/images/" + getImageName(name, id, type);
     fs.writeFile(newPath, data, function (err) {
       console.log(err);
     });
@@ -63,6 +69,8 @@ app.post('/lot/create', function(req, res) {
     StartTime: req.startTime + req.body.startAMPM,
     EndDate: req.body.endDate,
     EndTime: req.body.endTime + req.body.endAMPM,
+    SmallImageExt: getFileExt(req.files.smallImage.name),
+    LargemageExt: getFileExt(req.files.largeImage.name)
   };
   
   database.saveLot(lot, function(rtn){
