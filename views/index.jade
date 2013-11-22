@@ -7,7 +7,7 @@ block content
   script#lot-template(type='text/x-handlebars-template')
     div.lot-box
       div.title {{lot.Title}}
-      img(src='')
+      img(src='images/small_{{lot._id}}.{{lot.SmallImageExt}}')
       div.label High Bid:
         high bid
         -

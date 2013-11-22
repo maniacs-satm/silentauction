@@ -14,11 +14,11 @@ block content
     input(type="button", value="Place Bid", id="makeBid")
   div
     span#resultMsg
-    
 
   script#lot-template(type='text/x-handlebars-template')
     div.lot-box-big
       div.title {{lot.Title}}
+      img(src='/images/large_{{lot._id}}.{{lot.LargeImageExt}}')
       div {{lot.Description}}
       div Minimum Bid: {{lot.MinimumBid}}
       div High Bid: 

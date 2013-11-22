@@ -70,7 +70,7 @@ app.post('/lot/create', function(req, res) {
     EndDate: req.body.endDate,
     EndTime: req.body.endTime + req.body.endAMPM,
     SmallImageExt: getFileExt(req.files.smallImage.name),
-    LargemageExt: getFileExt(req.files.largeImage.name)
+    LargeImageExt: getFileExt(req.files.largeImage.name)
   };
   
   database.saveLot(lot, function(rtn){
@@ -85,6 +85,19 @@ app.post('/lot/create', function(req, res) {
 app.get('/register', function(req, res) {
   res.render('register');
 });
+
+app.get('/login', function(req, res) {
+  res.render('login');
+});
+
+app.post('/api/user/login', function(req, res) {
+  // check if the user exists
+  // check if the password matches.
+  // return true of false
+  var result = {result: true, errors: []};
+  res.send(JSON.stringify(result));
+});
+
 
 app.post('/api/user/register', function(req, res) {
   var f = function(result) {
