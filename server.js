@@ -15,9 +15,8 @@ app.use('/images', express.static('./images'))
 
 var database = require('./data.js');
 
-app.get('api/utils/gettime', function(req, res) {
-  var d = new Date();
-  res.send(JSON.stringify({current: d}));
+app.post('/api/utils/gettime', function(req, res) {
+  res.send(JSON.stringify(new Date()));
 });
  
 app.get('/', function(req, res) {
