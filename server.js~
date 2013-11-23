@@ -166,6 +166,7 @@ app.get('/api/lots/open', function(req, res) {
   database.getOpenLots(f);
 });
 
+  
 app.get('/api/lots/closed', function(req, res) {
   var f = function(data){
     res.send(JSON.stringify(data));
