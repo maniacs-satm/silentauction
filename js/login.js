@@ -2,7 +2,9 @@
   $(document).ready(function() {
 
     $('#login').click(function(e) {
-      
+
+      $('#status').empty();
+
       var user = {UserName: $('#username').val(), 
             Password: $('#password').val()};
 
@@ -12,6 +14,7 @@
         url: "/api/user/login",
         dataType: "json"
       }).done(function(result){
+        console.log(result);
         if (!result.result) {
           $.each(result.errors, function(i, e) {
             $('#status').append($('<div>').html(e));

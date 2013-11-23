@@ -1,7 +1,6 @@
 var db = require("mongojs").connect("localhost:27017/silentauction", ["users", "lots"]);
 var validation = require('./js/validation.js');
 
-
 exports.getUsers = function(f) {
   db.users.find(function(err, users) {
     if (!err && users) {
@@ -9,6 +8,21 @@ exports.getUsers = function(f) {
     }
   });
 };
+
+exports.getUser = function(username, f) {
+  db.users.find({UserName: username}, function(err, users) {
+    if (err) {
+      f({errors: err, result: false});
+    }
+    else if (users && users.length > 0) {
+      f({errors: [], result: true, user: users[0]});    
+    }
+    else {
+      f({errors: ['no user found'], result: false});    
+    }
+  });
+};
+
 
 exports.saveUser = function(user, f) {
   var saveCallback = function(errors, user) {

@@ -7,14 +7,19 @@ html
     script(type='text/javascript', src='/js/jquery-1.9.1.js')
     script(type='text/javascript', src='/js/jquery-ui-1.10.3.custom.min.js')
     script(type='text/javascript', src='/js/handlebars-v1.1.2.js')
+    script(src='/js/layout.js')
     block scripts
 
   body
     div(class="header-outer")
       div(class="header-inner")
         div(class="header-left") Silent Auction - 2013
-        div(class="header-right") current time:
-
+        div(class="header-logout")
+          a#headerLogout Logout
+          a#headerLogin Login
+        div(class="header-right")
+          | Bid on, 
+          span#headerUserName !
     div(class="content-box")
       block content
 

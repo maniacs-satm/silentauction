@@ -29,6 +29,17 @@ body {
   padding-right: 40px;
 }
 
+.header-logout {
+  float: right;
+  font-size: 12px;
+}
+
+.header-logout:hover {
+  color: #eeeeee;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
 .content-box {
   width: 800px;
   margin: auto;

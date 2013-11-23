@@ -6,6 +6,8 @@ var fs = require('fs');
 app.set('view engine', 'jade');
 app.set('views', './views');
 
+app.use(express.cookieParser());
+app.use(express.session({secret: '1234567890QWERTY'}));
 app.use(express.bodyParser());
 app.use('/js', express.static('./js'));
 app.use('/css', express.static('./css'));
@@ -13,11 +15,7 @@ app.use('/images', express.static('./images'))
 
 var database = require('./data.js');
 
-app.get('/data', function(req, res) {
-  res.send(JSON.stringify({test: true, value: 100}));
-});
-
-app.get('/gettime', function(req, res) {
+app.get('api/utils/gettime', function(req, res) {
   var d = new Date();
   res.send(JSON.stringify({current: d}));
 });
@@ -91,13 +89,33 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/api/user/login', function(req, res) {
-  // check if the user exists
-  // check if the password matches.
-  // return true of false
-  var result = {result: true, errors: []};
-  res.send(JSON.stringify(result));
+  database.getUser(req.body.user.UserName, function(result) {
+    if (result.result && result.user.Password == req.body.user.Password) {
+      req.session.username = result.user.UserName;
+      req.session.loggedIn = true;      
+      result.result = true;
+    }
+    else {
+      result.result = false;
+      result.errors = ['Login failed.'];
+    }
+    res.send(JSON.stringify(result));
+  });
 });
 
+app.post('/api/user/logout', function(req, res) {
+  req.session.username = '';
+  req.session.loggedIn = false;
+  res.send(JSON.stringify({result: true}));
+});
+
+
+app.post('/api/user/getCurrent', function(req, res) {
+  if (req.session.username && req.session.loggedIn)
+    res.send(JSON.stringify(req.session.username));
+  else
+    res.send(JSON.stringify(''));
+});
 
 app.post('/api/user/register', function(req, res) {
   var f = function(result) {
@@ -138,7 +156,6 @@ app.post('/api/lot/delete', function(req, res) {
 
 app.get('/api/lots/open', function(req, res) {
   var f = function(data){
-    console.log(data);
     res.send(JSON.stringify(data));
   };
 
