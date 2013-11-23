@@ -31,7 +31,7 @@ body {
 
 .header-left{
   float: left;
-  padding-left: 40px;
+  padding-left: 16px;
   z-index: 120;
 }
 
