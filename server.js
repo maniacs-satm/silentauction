@@ -136,6 +136,7 @@ app.post('/api/user/getall', function(req, res) {
 app.get('/api/lot/details', function(req, res) {
   var id = req.query.id;
   var f = function(data){
+    data.username = req.session.username || '';
     res.send(JSON.stringify(data));
   };
 
@@ -144,9 +145,9 @@ app.get('/api/lot/details', function(req, res) {
 
 app.post('/api/bid/put', function(req, res) {
   var c = function(errors, id) {
-    res.send(JSON.stringify({errors: errors, id: id}));
+    res.send(JSON.stringify({errors: errors, id: id, username: req.session.username}));
   };
-  
+  req.body.bid.UserName = req.session.username;
   database.saveBid(req.body.bid, c);
 });
 

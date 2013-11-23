@@ -4,14 +4,13 @@ block content
   h1 Item Details
   div.lot-container
     input#lotId(type="hidden" value=id)
-  div
+  div.logged-in
     span Bid Amount: 
     input(id="bidAmount")
-  div
-    span Bidder: 
-    input(id="bidder")
-  div
+  div.logged-in
     input(type="button", value="Place Bid", id="makeBid")
+  div.logged-out 
+    a(href="/login") Login to bid
   div
     span#resultMsg
 

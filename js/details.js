@@ -11,6 +11,14 @@
 		}).done(function(l) {
       var highBid = getHighBid(l);
       $('.lot-container').append(template({lot: l, highBid: highBid.highBid, highBidder: highBid.highBidder, totalBids: highBid.totalBids}));
+      if (l.username != '') {
+        $('.logged-in').show();
+        $('.logged-out').hide();
+      } else {
+        $('.logged-in').hide();
+        $('.logged-out').show();
+      }
+        
 		}).error(function(e) {
       $('.lot-container').append(e);
     });
@@ -36,7 +44,6 @@
       var data = {
         LotId: $("#lotId").val(),
         Amount: $("#bidAmount").val(),
-        UserName: $("#bidder").val()
       };
 
       $.ajax({
@@ -44,13 +51,13 @@
         data: {'bid': data},
         url: "/api/bid/put",
         dataType: "json"
-      }).done(function(errors, id, totalBids) {
+      }).done(function(errors, id, totalBids, username) {
         if (errors && errors.length > 0) {
         }
         else {
           $('#resultMsg').text('Bid accepted');
           $('#highBid').text(data.Amount);
-          $('#highBidder').text(data.UserName);
+          $('#highBidder').text(username);
           var totalBids = $('#totalBids').text();
           $('#totalBids').text(+totalBids + 1);
         }    
