@@ -13,9 +13,13 @@
 			url: "/api/lots/open",
 			dataType: "json"
 		}).done(function(lots) {
-      console.log('done');
+      lots.sort(function(a, b) {
+        if (a.EndDateTime < b.EndDateTime)
+          return -1;
+        else
+          return 1;
+      });
       $.each(lots, function(i, l){
-		console.log(l);
         $('.lot-container').append(template({lot: l}));
       });
 		}).fail(function(x, e, d) {
