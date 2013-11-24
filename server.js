@@ -61,21 +61,25 @@ var saveFile = function(path, name, id, type) {
 };
 
 app.post('/lot/create', function(req, res) {
+  var start = new Date(req.body.startDate + ' ' + req.body.startTime + ':00 ' + req.body.startAMPM);
+  var end = new Date(req.body.endDate + ' ' + req.body.endTime + ':00 ' + req.body.endAMPM);
+
   var lot = {
     Title: req.body.title,
     Description: req.body.description,
     MinimumBid: req.body.minimumBid,
     DonatedBy: req.body.donatedBy,
     DonatedLink: req.body.donatedLink,
-    StartDate: req.body.startDate,
-    StartTime: req.startTime + req.body.startAMPM,
-    EndDate: req.body.endDate,
-    EndTime: req.body.endTime + req.body.endAMPM,
+    StartDateTime: start,
+    EndDateTime: end,
     SmallImageExt: getFileExt(req.files.smallImage.name),
     LargeImageExt: getFileExt(req.files.largeImage.name)
   };
+  console.log(lot);
+
   
   database.saveLot(lot, function(rtn){
+    console.log('inside callback');
     saveFile(req.files.smallImage.path, req.files.smallImage.name, rtn.id, 'small');
     saveFile(req.files.largeImage.path, req.files.largeImage.name, rtn.id, 'large'); 
 
@@ -178,7 +182,7 @@ app.get('/api/lots/closed', function(req, res) {
     res.send(JSON.stringify(data));
   };
   
-  database.getOpenLots(f);
+  database.getClosedLots(f);
 });
 
 http.createServer(app).listen(8888, function() {

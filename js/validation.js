@@ -10,17 +10,11 @@ exports.validateLot = function(lot) {
   if (!lot.MinimumBid || isNaN(lot.MinimumBid) || lot.MinimumBid < 1)
     errors.push('Minimum Bid must be at least one dollar.');
 
-  if (!lot.StartDate || lot.StartDate == '')
+  if (!lot.StartDateTime || lot.StartDateDate == '')
     errors.push('Must provide a Start Date.');
 
-  if (!lot.StartTime || lot.StartTime == '')
-    errors.push('Must provide a Start Time.');
-
-  if (!lot.EndDate || lot.EndDate == '')
+  if (!lot.EndDateTime || lot.EndDateTime == '')
     errors.push('Must provide an End Date.');
-
-  if (!lot.EndTime || lot.EndTime == '')
-    errors.push('Must provide an End Time.');
 
   return errors;
 }

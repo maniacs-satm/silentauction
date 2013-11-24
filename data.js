@@ -95,13 +95,23 @@ exports.deleteLots = function() {
 };
 
 exports.getOpenLots = function(f) {
-  db.lots.find(function(err, lots) {
-    console.log(err);
+  var d = new Date()
+  db.lots.find({EndDateTime: { $gt: d }}, function(err, lots) {
     if (!err && lots) {
       f(lots);
     }
   });
 };
+
+exports.getClosedLots = function(f) {
+  var d = new Date()
+  db.lots.find({EndDateTime: { $lt: d }}, function(err, lots) {
+    if (!err && lots) {
+      f(lots);
+    }
+  });
+};
+
 
 exports.getDetails = function(f, id) {
   db.lots.find({_id: require("mongojs").ObjectId(id)}, function(err, lot) {

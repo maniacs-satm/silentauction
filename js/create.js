@@ -1,46 +1,6 @@
 (function($) { 
   $(document).ready(function() {
-
     setUpDateFields();
-
-    $('#create').click(function() {
-      var data = {
-            Title: $('#title').val(),
-            Description: $('#description').val(),
-            MinimumBid: $('#minimumBid').val(),
-            DonatedBy: $('#donatedBy').val(),
-            DonatedLink: $('#donatedLink').val(),
-            StartDate: $('#startDate').val(),
-            StartTime: $('#startTime').val() + $('#startAMPM').val(),
-            EndDate: $('#endDate').val(),
-            EndTime: $('#endTime').val() + $('#endAMPM').val(),
-            smallImage: $('#smallImage').val(),
-            largeImage: $('#largeImage').val()
-      };
-
-      $.ajax({
-        type: "file",
-        data: {'lot': data},
-        url: "/api/lot/create",
-        dataType: "json"
-      }).done(function(errors){
-          $('#status').show().empty();
-
-          if (errors && errors.length > 0)
-          {
-            $.each(errors, function(i, error) {
-              $('#status').append($("<p>").text(error));
-            });        
-          }
-          else {
-            $('form input').val('');
-            $('#status').append($('<p>').text('Lot created successfully'));
-          }
-
-          setTimeout(function(){$('#status').fadeOut();}, 3000);
-        
-      });
-    });
 
     $('#delete').click(function() {
       $.ajax({
