@@ -2,6 +2,7 @@ var http = require('http');
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var crypto = require('crypto');
 
 app.set('view engine', 'jade');
 app.set('views', './views');
@@ -92,6 +93,10 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/api/user/login', function(req, res) {
+
+  req.body.user.Password = crypto.createHmac('sha1', 'fgw039kxx').update(req.body.user.Password).digest('hex'); 
+  console.log(req.body.user.Password);
+
   database.getUser(req.body.user.UserName, function(result) {
     if (result.result && result.user.Password == req.body.user.Password) {
       req.session.username = result.user.UserName;
@@ -124,7 +129,9 @@ app.post('/api/user/register', function(req, res) {
   var f = function(result) {
     res.send(JSON.stringify(result));
   };
-  
+  req.body.user.Password = crypto.createHmac('sha1', 'fgw039kxx').update(req.body.user.Password).digest('hex'); 
+  console.log(req.body.user.Password);
+
   database.saveUser(req.body.user, f);
 });
 
