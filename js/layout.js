@@ -21,6 +21,14 @@
       }
     });
 
+    $.ajax({
+      type: "post",
+      url: "/api/bid/total",
+      dataType: "json"
+    }).done(function(rtn) {
+      $('#totalRaised').text(formatCurrency(rtn.total));
+    });
+
     $('#headerLogin').click(function(e) {
       document.location = '/login';
     });
@@ -54,7 +62,7 @@
       var lots = $('.lot-end-date');
 
       $.each(lots, function(i, l) {
-        if (new Date(l.val()) <= time) {
+        if (new Date($(l).val()) <= time) {
           $(l).parent().fadeOut();
         }
       });
@@ -98,6 +106,11 @@
 
       return h + ":" + m + ":" + s + dd;
     };
+
+    var formatCurrency = function(v) {
+      return '$' + v.toFixed(2);
+    };
+
 
   });
 })(jQuery)

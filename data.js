@@ -94,6 +94,18 @@ exports.deleteLots = function() {
   exports.getOpenLots(deleteCallback);
 };
 
+exports.getTotalBids = function(f) {
+  exports.getClosedLots(function(lots){
+    var total = 0;
+    for(var i=0; i<lots.length; i++) {
+      if (lots[i].Bids && lots[i].Bids.length > 0)
+        total = total + +lots[i].Bids[lots[i].Bids.length - 1].Amount;
+    }
+    f(total);
+  });
+};
+
+
 exports.getOpenLots = function(f) {
   var d = new Date()
   db.lots.find({EndDateTime: { $gt: d }}, function(err, lots) {
