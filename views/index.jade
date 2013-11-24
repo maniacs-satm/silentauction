@@ -6,6 +6,7 @@ block content
 
   script#lot-template(type='text/x-handlebars-template')
     div.lot-box
+      input.lot-end-date(type='hidden' value='{{lot.EndDateTime}}')
       div.title {{lot.Title}}
       img(src='images/small_{{lot._id}}.{{lot.SmallImageExt}}')
       div.label High Bid:

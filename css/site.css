@@ -5,7 +5,7 @@ body {
 }
 
 .header-outer{
-  height: 40px;
+  height: 50px;
   width: 100%;
   background: rgb(69,72,77); /* Old browsers */
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -57,7 +57,7 @@ body {
   position: absolute;
   font-size: 18px;
   display: none;
-  top: 40px;
+  top: 50px;
   z-index: 100;
   border-right: 2px solid #999;
   border-left: 2px solid #999;

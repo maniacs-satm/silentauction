@@ -21,6 +21,14 @@
       }
     });
 
+    $.ajax({
+      type: "post",
+      url: "/api/bid/total",
+      dataType: "json"
+    }).done(function(rtn) {
+      $('#totalRaised').text(formatCurrency(rtn.total));
+    });
+
     $('#headerLogin').click(function(e) {
       document.location = '/login';
     });
@@ -47,6 +55,18 @@
       });
     });
 
+    var hour;
+
+    var filterLots = function(time) {
+      console.log(time);
+      var lots = $('.lot-end-date');
+
+      $.each(lots, function(i, l) {
+        if (new Date($(l).val()) <= time) {
+          $(l).parent().fadeOut();
+        }
+      });
+    };
 
     window.setInterval(function() {
       $.ajax({
@@ -54,6 +74,15 @@
         url: "/api/utils/gettime",
         dataType: "json"
       }).done(function(time){
+
+        // when the clock strikes the hour... scrub open items        
+        var newHour = (new Date(time)).getHours();
+        if (hour != newHour)
+        {
+          hour = newHour;
+          filterLots(new Date(time));
+        }
+
         $('#headerTime').html(formatDate(time));
       });
     }, 999);
@@ -77,6 +106,11 @@
 
       return h + ":" + m + ":" + s + dd;
     };
+
+    var formatCurrency = function(v) {
+      return '$' + v.toFixed(2);
+    };
+
 
   });
 })(jQuery)

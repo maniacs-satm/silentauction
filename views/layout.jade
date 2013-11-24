@@ -29,10 +29,13 @@ html
           div.menu-item.logged-in
             a(href='/login') Log Out
         div#headerMenu.header-left
-          img#menuImage(src="/css/images/down-arrow.png", style='position: relative; z-index: 140')
+          img#menuImage(src="/css/images/down-arrow.png", style='position: relative; z-index: 140; top: 10px')
         div.header-left Silent Auction - 2013
-        div.header-left(style='padding-left: 60px;') Auction Time:
-          span#headerTime
+        div.header-left(style='padding-left: 20px;')
+          div Auction Time:
+            span#headerTime
+          div Total Raised: 
+            span#totalRaised $0.00
         div.header-logout
           a#headerLogout Logout
           a#headerLogin Login

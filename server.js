@@ -150,6 +150,12 @@ app.get('/api/lot/details', function(req, res) {
   database.getDetails(f, id);
 });
 
+app.post('/api/bid/total', function(req, res) {
+  database.getTotalBids(function(total) {
+    res.send(JSON.stringify({total: total}));
+  });
+});
+
 app.post('/api/bid/put', function(req, res) {
   var c = function(errors, id) {
     res.send(JSON.stringify({errors: errors, id: id, username: req.session.username}));
