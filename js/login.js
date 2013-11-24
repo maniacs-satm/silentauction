@@ -25,6 +25,9 @@
         }
       });
     });
+    
+    $('#register').click(function() {
+      window.location.replace('/register');
+    });
   });
-
 })(jQuery)

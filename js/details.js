@@ -29,16 +29,20 @@
 
       if (!l.Bids || l.Bids.length == 0)
         return {highBid: 0, highBidder: '', totalBids: 0};
-
+        
       $.each(l.Bids, function(i, bid) {
-        if (bid.Amount > highBid) {
+        if (bid.Amount <= highBid) {
+          return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
+        }
+        else if (bid.Amount > highBid) {
           highBid = bid.Amount;
           highBidder = bid.UserName;
-        }
+        };
+        return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
       });
 
-      return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
-    };
+      //return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
+   // };
 
     $('#makeBid').click(function() {
       var data = {
@@ -64,7 +68,6 @@
       });                
     });
 
-	});
 })(jQuery)
 
 
