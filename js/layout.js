@@ -16,8 +16,8 @@
       else {
         $('#headerLogin').show();
         $('#headerLogout').hide();
-        $('.logged-out').hide();
-        $('.logged-in').show();
+        $('.logged-out').show();
+        $('.logged-in').hide();
       }
     });
 

@@ -75,11 +75,8 @@ app.post('/lot/create', function(req, res) {
     SmallImageExt: getFileExt(req.files.smallImage.name),
     LargeImageExt: getFileExt(req.files.largeImage.name)
   };
-  console.log(lot);
-
   
   database.saveLot(lot, function(rtn){
-    console.log('inside callback');
     saveFile(req.files.smallImage.path, req.files.smallImage.name, rtn.id, 'small');
     saveFile(req.files.largeImage.path, req.files.largeImage.name, rtn.id, 'large'); 
 
@@ -97,9 +94,7 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/api/user/login', function(req, res) {
-
   req.body.user.Password = crypto.createHmac('sha1', 'fgw039kxx').update(req.body.user.Password).digest('hex'); 
-  console.log(req.body.user.Password);
 
   database.getUser(req.body.user.UserName, function(result) {
     if (result.result && result.user.Password == req.body.user.Password) {
@@ -134,8 +129,6 @@ app.post('/api/user/register', function(req, res) {
     res.send(JSON.stringify(result));
   };
   req.body.user.Password = crypto.createHmac('sha1', 'fgw039kxx').update(req.body.user.Password).digest('hex'); 
-  console.log(req.body.user.Password);
-
   database.saveUser(req.body.user, f);
 });
 
