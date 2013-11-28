@@ -9,8 +9,9 @@
 			url: "/api/lot/details",
 			dataType: "json"
 		}).done(function(l) {
+      
       var highBid = getHighBid(l);
-      $('.lot-container').append(template({lot: l, highBid: highBid.highBid, highBidder: highBid.highBidder, totalBids: highBid.totalBids}));
+      $('.lot-container').append(template({lot: l, highBid: '$' + (+highBid.highBid).toFixed(2), highBidder: highBid.highBidder, totalBids: highBid.totalBids}));
       if (l.username != '') {
         $('.logged-in').show();
         $('.logged-out').hide();
@@ -61,7 +62,7 @@
         }
         else {
           $('#resultMsg').append($('<p>').text('Bid accepted'));
-          $('#highBid').text(data.Amount);
+          $('#highBid').text('$' + data.Amount.toFixed(2));
           $('#highBidder').text(username);
           var totalBids = $('#totalBids').text();
           $('#totalBids').text(+totalBids + 1);
