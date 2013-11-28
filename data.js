@@ -76,6 +76,18 @@ exports.saveLot = function(lot, f) {
 
 exports.saveBid = function(bid, f) {
   var getCallback = function(l) {
+    if (bid.Amount < +l.MinimumBid) {
+      f({errors: ['bid must be more than the minimum bid.']});
+      return;    
+    }
+
+    for(var i=0; i<l.Bids.length; i++) {
+      if (l.Bids[i].Amount + 1 > bid.Amount) {
+        f({errors: ['bid must be at least one dollar more than the current high bid.']});
+        return;
+      }
+    }
+    
     if (!l.Bids) l.Bids = [];
     l.Bids.push(bid);
     exports.saveLot(l, f);

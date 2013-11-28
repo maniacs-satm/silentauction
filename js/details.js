@@ -18,7 +18,6 @@
         $('.logged-in').hide();
         $('.logged-out').show();
       }
-        
 		}).error(function(e) {
       $('.lot-container').append(e);
     });
@@ -31,18 +30,13 @@
         return {highBid: 0, highBidder: '', totalBids: 0};
         
       $.each(l.Bids, function(i, bid) {
-        if (bid.Amount <= highBid) {
-          return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
-        }
-        else if (bid.Amount > highBid) {
+        if (bid.Amount > highBid) {
           highBid = bid.Amount;
           highBidder = bid.UserName;
         };
-        return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
       });
-
-      //return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
-   // };
+      return {highBid: highBid, highBidder: highBidder, totalBids: l.Bids.length};
+    };
 
     $('#makeBid').click(function() {
       var data = {
@@ -55,11 +49,15 @@
         data: {'bid': data},
         url: "/api/bid/put",
         dataType: "json"
-      }).done(function(errors, id, totalBids, username) {
-        if (errors && errors.length > 0) {
+      }).done(function(rtn, id, totalBids, username) {
+        $('#resultMsg').empty();
+        if (rtn.errors && rtn.errors.length > 0) {
+          $.each(rtn.errors, function(i, err) {
+            $('#resultMsg').append($('<p>').text(err));
+          });
         }
         else {
-          $('#resultMsg').text('Bid accepted');
+          $('#resultMsg').append($('<p>').text('Bid accepted'));
           $('#highBid').text(data.Amount);
           $('#highBidder').text(username);
           var totalBids = $('#totalBids').text();
@@ -67,7 +65,7 @@
         }    
       });                
     });
-
+  });
 })(jQuery)
 
 

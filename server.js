@@ -157,9 +157,10 @@ app.post('/api/bid/total', function(req, res) {
 });
 
 app.post('/api/bid/put', function(req, res) {
-  var c = function(errors, id) {
-    res.send(JSON.stringify({errors: errors, id: id, username: req.session.username}));
+  var c = function(rtn) {
+    res.send(JSON.stringify({errors: rtn.errors, id: rtn.id, username: req.session.username}));
   };
+
   req.body.bid.UserName = req.session.username;
   database.saveBid(req.body.bid, c);
 });
