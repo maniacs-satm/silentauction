@@ -76,6 +76,12 @@ exports.saveLot = function(lot, f) {
 
 exports.saveBid = function(bid, f) {
   var getCallback = function(l) {
+    if (new Date() > l.EndDateTime) {
+      f({errors: ['Sorry! Your generous bid has been rejected by the harsh realities of time. (auction is closed)']});
+      return;    
+    }
+
+
     if (bid.Amount < +l.MinimumBid) {
       f({errors: ['bid must be more than the minimum bid.']});
       return;    
