@@ -18,6 +18,9 @@
         $('.logged-in').hide();
         $('.logged-out').show();
       }
+      if (l.username != '' && new Date(l.EndDateTime) > new Date())
+        $('.bid-control').show();
+
 		}).error(function(e) {
       $('.lot-container').append(e);
     });

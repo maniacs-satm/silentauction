@@ -53,6 +53,10 @@ body {
   margin-top: 4px;
 }
 
+.bid-control {
+  display: none;
+}
+
 .header-menu {
   position: absolute;
   font-size: 18px;
