@@ -15,8 +15,18 @@
 		}).done(function(lots) {
       console.log('done');
       $.each(lots, function(i, l){
-		console.log(l);
-        $('.lot-container').append(template({lot: l}));
+        var highBid = 0;
+        var highBidder = ' -- ';
+        
+        if (l.Bids) {
+          $.each(l.Bids, function(i, bid) {
+            if (bid.Amount > highBid) {
+              highBid = bid.Amount;
+              highBidder = bid.UserName;
+            }
+          });
+        }
+	      $('.lot-container').append(template({lot: l, highBid: '$' + (+highBid).toFixed(2), highBidder: highBidder}));
       });
 		}).fail(function(x, e, d) {
       console.log('fail');
