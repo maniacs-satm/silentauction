@@ -26,7 +26,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/lot/create', function(req, res) {
-  res.render('create', {admin: req.session.isAdmin});
+  if (!req.session.isAdmin)
+    res.redirect('/');
+  else
+    res.render('create', {admin: req.session.isAdmin});
 });
 
 app.get('/lot/details/:id', function(req, res) {
