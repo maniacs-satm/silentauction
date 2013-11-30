@@ -5,7 +5,7 @@
 
 		$.ajax({
 			type: "GET",
-      data: {'id': $('#lotId').val()},
+      data: {'id': '52992d8753f47e7c13000001'},
 			url: "/api/lot/details",
 			dataType: "json"
 		}).done(function(l) {

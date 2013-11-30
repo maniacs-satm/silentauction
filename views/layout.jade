@@ -19,11 +19,12 @@ html
           div.menu-item
             a(href='/lots/closed') Closed Items
           div.menu-item
-            a(href='/user/bids') My Bids
+            a(href='/user/bids') My Bids 
           div.menu-item ---
-          div.menu-item
-            a(href='/lot/create') Create Lot
-          div.menu-item ---
+          if (admin)
+            div.menu-item
+              a(href='/lot/create') Create Lot
+            div.menu-item ---
           div.menu-item.logged-out
             a(href='/login') Log In
           div.menu-item.logged-in

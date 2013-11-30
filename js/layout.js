@@ -111,6 +111,5 @@
       return '$' + v.toFixed(2);
     };
 
-
   });
 })(jQuery)

@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var crypto = require('crypto');
+var config = require('./config');
 
 app.set('view engine', 'jade');
 app.set('views', './views');
@@ -21,19 +22,19 @@ app.post('/api/utils/gettime', function(req, res) {
 });
  
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index', {admin: req.session.isAdmin});
 });
 
 app.get('/lot/create', function(req, res) {
-  res.render('create');
+  res.render('create', {admin: req.session.isAdmin});
 });
 
 app.get('/lot/details/:id', function(req, res) {
-  res.render('details', {id: req.params.id});
+  res.render('details', {id: req.params.id, admin: req.session.isAdmin});
 });
 
 app.get('/lots/closed', function(req, res) {
-  res.render('closed');
+  res.render('closed', {admin: req.session.isAdmin});
 });
 
 var getFileExt = function(name) {
@@ -93,6 +94,15 @@ app.get('/login', function(req, res) {
   res.render('login');
 });
 
+var IsAdmin = function(username) {
+  for(var i=0; i<config.admins.length; i++)
+  {
+    if (config.admins[i] == username)
+      return true;
+  }
+  return false;
+}
+
 app.post('/api/user/login', function(req, res) {
   req.body.user.Password = crypto.createHmac('sha1', 'fgw039kxx').update(req.body.user.Password).digest('hex'); 
 
@@ -100,6 +110,7 @@ app.post('/api/user/login', function(req, res) {
     if (result.result && result.user.Password == req.body.user.Password) {
       req.session.username = result.user.UserName;
       req.session.loggedIn = true;      
+      req.session.isAdmin = IsAdmin(result.user.UserName);
       result.result = true;
     }
     else {
@@ -147,6 +158,7 @@ app.get('/api/lot/details', function(req, res) {
     res.send(JSON.stringify(data));
   };
 
+  console.log(id);
   database.getDetails(f, id);
 });
 

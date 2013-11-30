@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Item Details
   div.lot-container
-    input#lotId(type="hidden" value=id)
+    input#lotId(type="hidden" value='#{id}')
   div.bid-control
     span Bid Amount: 
     input(id="bidAmount")
